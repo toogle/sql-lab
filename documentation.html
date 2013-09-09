@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Методическое пособие / Лабораторная работа №1. SQL-инъекции</title>
+		<meta name="description" content="SQL Injection Lab">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+
+		<style>
+			h4 {
+				margin-top: 25px;
+			}
+
+			.nav-inner {
+				margin-left: 10px;
+			}
+
+			.callout { 
+				border-left: 5px solid #EEEEEE;
+				margin: 20px 0px;
+				padding: 15px 30px 15px 15px;
+			}
+			.callout-info { 
+				background-color: #F0F7FD;
+				border-color: #D0E3F0;
+			}
+		</style>
+
+		<!--[if lt IE 9]>
+			<script src="js/lib/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<!--[if lt IE 7]>
+			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		<![endif]-->
+
+		<div class="container">
+			<div class="page-header">
+				<h1 class="text-center">Лабораторная работа №1 <small>&laquo;SQL-инъекции&raquo;</small></h1>
+			</div>
+
+			<div class="row">
+				<div class="col-md-3">
+					<ul class="nav nav-pills nav-stacked">
+						<li><a href=".">Главная</a></li>
+						<li class="active">
+							<a href="#">Методическое пособие</a>
+							<ul class="nav nav-pills nav-stacked nav-inner">
+								<li><a href="#invalid-input">Некорректная обработка входных параметров</a></li>
+								<li><a href="#unauthorized-access">Несанкционированный доступ к данным</a></li>
+								<li><a href="#blind">Слепая SQL-инъекция</a></li>
+								<li><a href="#tricks">Особенности реализации SQL-инъекций</a></li>
+								<li><a href="#mitigation">Предотвращение SQL-инъекций</a></li>
+							</ul>
+						</li>
+						<li>
+							<a class="accordion-toggle" href="#cases" data-toggle="collapse">Рабочее задание</a>
+							<ul id="cases" class="nav nav-pills nav-stacked nav-inner collapse">
+								<li><a href="cases/1/">Задание №1</a></li>
+								<li><a href="cases/2/">Задание №2</a></li>
+								<li><a href="cases/3/">Задание №3</a></li>
+							</ul>
+						</li>
+						<li><a href="https://github.com/toogle/sql-lab">Исходный код</a></li>
+					</ul>
+				</div>
+
+				<div class="col-md-9">
+					<div class="well well-lg">
+						<p>
+							SQL-инъекция (англ. <i>SQL injection</i>) — распространённая атака на веб-сайты и приложения,
+							работающие с <abbr title="база данных">БД</abbr>. Атака возможна в том случае, когда входные
+							данные, получаемые от пользователя, некорректно или недостаточно фильтруются перед использованием
+							в запросах к БД. Это позволяет внедрять во входные данные произвольный SQL-код, меняющий логику
+							работы запроса.
+						</p>
+						<p>
+							В зависимости от типа используемой <abbr title="система управления базами данных">СУБД</abbr>
+							и особенностей уязвимого приложения, SQL-инъекция может дать возможность атакующему выполнить
+							произвольный запрос к БД, получить возможность чтения и/или записи локальных файлов или даже
+							выполнения произвольных команд на атакуемом сервере.
+						</p>
+						<p>
+							Атака может быть реализована против любой СУБД, поддерживающей SQL: MySQL, PostgreSQL, Oracle
+							и т.д.
+						</p>
+						<p>
+							Далее рассмотрим ряд уязвимостей, приводящих к возможности реализации SQL-инъекции.
+						</p>
+
+						<h4 id="invalid-input">Некорректная обработка входных параметров</h4>
+						<p>
+							В случае, когда входные данные некорректно или недостаточно фильтруются, они могут содержать
+							служебные символы и SQL-код. Вследствие этого злоумышленник может передать специально сформированную
+							строку, которая будет подставлена в запрос к БД.
+						</p>
+						<p>
+							Пример уязвимого кода на PHP:
+<pre><code><font color="#009900">$username</font> <font color="#990000">=</font> <font color="#009900">$_GET</font><font color="#990000">[</font><font color="#FF0000">'username'</font><font color="#990000">];</font>
+<font color="#009900">$result</font> <font color="#990000">=</font> <b><font color="#000000">mysql_query</font></b><font color="#990000">(</font><font color="#FF0000">"SELECT * FROM users WHERE username = '$username'"</font><font color="#990000">);</font></code></pre>
+
+							Этот код получает значение параметра <tt>username</tt>, переданное пользователем. Затем это значение
+							непосредственно используется для запроса к БД без какой-либо дополнительной обработки.
+						</p>
+						<p>
+							Для реализации SQL-инъекции в данном случае достаточно передать в качестве <tt>username</tt> следующую
+							строку: <code>' OR '1' = '1</code>. При этом выражение в условии запроса примет вид:
+							<code>username = '' OR '1' = '1'</code>. Очевидно, что оно всегда верно, поскольку всегда верно
+							выражение <code>'1' = '1'</code>. Таким образом, запрос вернёт все строки из таблицы <tt>users</tt>.
+						</p>
+
+						<div class="panel panel-info">
+							<div class="panel-heading">Демонстрация</div>
+							<div class="panel-body">
+								<input type="text" value="demo" class="form-control" id="demo1-field">
+								<pre><code>SELECT * FROM users WHERE username = '<span id="demo1-slot"></span>'</code></pre>
+							</div>
+						</div>
+
+						<p>
+							Простейшей проверкой на недостаточную фильтрацию входных параметров служит подстановке символа одинарной
+							(реже двойной или обратной) кавычки. Если входные данные обрабатываются некорректно, то такая подстановка
+							гарантированно приведёт к ошибке, поскольку не будет обнаружено закрывающей кавычки. Аномальным
+							поведением считается такое, при котором страницы, получаемые до и после подстановки кавычек, различаются,
+							если при этом не получена страница с информацией о неверном формате параметров.
+						</p>
+						
+						<p>
+							Следует отметить, что приложение может получать входные данные не только из пользовательских форм, но и из
+							идентификаторов cookie, заголовков протокола <abbr title="HyperText Transfer Protocol">HTTP</abbr> и
+							других источников. Кроме того, параметры могут быть переданы посредством «невидимых» (<tt>type="hidden"</tt>)
+							полей в веб-формах. Для просмотра данных, передаваемых от браузера на сервер и обратно, можно воспользоваться
+							анализатором трафика или специализированные отладочным средством (например, <a href="http://getfirebug.com">Firebug</a>).
+						</p>
+
+						<h4 id="unauthorized-access">Несанкционированный доступ к данным</h4>
+						<p>
+							Язык SQL позволяет объединять результаты нескольких запросов при помощи оператора <tt>UNION</tt>. Это
+							позволяют злоумышленнику получить несанкционированный доступ к данным в таблицах, не используемых в
+							исходном запросе.
+						</p>
+
+						<p>
+<pre><code><font color="#009900">$id</font> <font color="#990000">=</font> <font color="#009900">$_GET</font><font color="#990000">[</font><font color="#FF0000">'id'</font><font color="#990000">];</font>
+<font color="#009900">$result</font> <font color="#990000">=</font> <b><font color="#000000">mysql_query</font></b><font color="#990000">(</font><font color="#FF0000">"SELECT author, title, text FROM news WHERE id = $id"</font><font color="#990000">);</font></code></pre>
+
+							Приведённый выше код предназначен для отображения новости с заданным <tt>id</tt> из таблицы <tt>news</tt>.
+						</p>
+
+						<p>
+							Если передать в качестве <tt>id</tt> строку <code>-1 UNION ALL SELECT login, password, NULL FROM users</code>,
+							то запрос не вернёт ни одной строки из таблицы <tt>news</tt>, поскольку строки с идентификатором -1 заведомо
+							не существует. При этом посредством оператора <tt>UNION</tt> будут выбраны все строки из таблицы <tt>users</tt>.
+						</p>
+
+						<div class="panel panel-info">
+							<div class="panel-heading">Демонстрация</div>
+							<div class="panel-body">
+								<input type="text" value="1234" class="form-control" id="demo2-field">
+								<pre><code>SELECT author, title, text FROM news WHERE id = <span id="demo2-slot"></span></code></pre>
+							</div>
+						</div>
+
+						<p>
+							Для успешного внедрения оператора <tt>UNION</tt> количество столбцов в выборках должно совпадать. Если
+							количество столбцов в первой (исходной) выборке больше, то вторую необходимо дополнить соответствующим
+							количеством констант (например, <tt>NULL</tt>).
+						</p>
+
+						<h4 id="blind">Слепая SQL-инъекция</h4>
+						<p>
+							SQL-инъекция называется <i>слепой</i> (англ. <i>blind SQL injection</i>) в том случае, когда результат
+							выполнения запроса недоступен злоумышленнику. При этом уязвимый веб-сайт по-разному реагирует на различные
+							логические выражения, подставляемые в уязвимый параметр. Таким образом, злоумышленник может подобрать
+							значения некоторых параметров (версия СУБД, текущее имя и права пользователя и т. д.), подставляя
+							в запрос соответствующие логические выражения.
+						</p>
+
+						<p>
+							Рассмотрим следующий код:
+<pre><code><font color="#009900">$id</font> <font color="#990000">=</font> <font color="#009900">$_GET</font><font color="#990000">[</font><font color="#FF0000">'id'</font><font color="#990000">];</font>
+<font color="#009900">$result</font> <font color="#990000">=</font> <b><font color="#000000">mysql_query</font></b><font color="#990000">(</font><font color="#FF0000">"SELECT * FROM catalog WHERE id = $id"</font><font color="#990000">);</font>
+<b><font color="#0000FF">if</font></b> <font color="#990000">(</font><b><font color="#000000">mysql_num_rows</font></b><font color="#990000">(</font><font color="#009900">$result</font><font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">)</font>
+	<i><font color="#9A1900">// Вывод описания товара…</font></i>
+<b><font color="#0000FF">else</font></b>
+	<b><font color="#0000FF">echo</font></b> <font color="#FF0000">"Товар не найден!"</font><font color="#990000">;</font></code></pre>							
+
+							Его задача — вывести описание товара из таблицы <tt>catalog</tt> по указанному <tt>id</tt>. В случае, если
+							товара с заданным <tt>id</tt> не существует, будет выведено соответствующее сообшение.
+						</p>
+						
+						<p>
+							Если в качестве <tt>id</tt> передать строку <code>1 AND 1 = 1</code>, то условие запроса не изменится,
+							поскольку выражение <code>1 = 1</code> всегда истинно. Если товар с <tt>id</tt> равным 1 существует, то
+							в ответ будет получена страница с его описанием. Если затем в качестве <tt>id</tt> передать строку
+							<code>1 AND 1 = 2</code> с заведомо ложным условием, то будет получено сообщение о том, что запрошенный
+							товар не существует. Таким образом, можно подобрать значения некоторых параметров БД, например, условие
+							<code>SUBSTR(@@version, 1, 1) = 5</code> будет верным только если версия СУБД равна 5.
+						</p>
+
+						<h4 id="tricks">Особенности реализации SQL-инъекций</h4>
+						<p>
+							Иногда злоумышленник может провести атаку, но не может видеть более одной колонки результатов. В таком случае
+							можно объединить несколько строк в одну при помощи конкатенации:
+<pre><code><b><font color="#0000FF">SELECT</font></b> login <font color="#990000">||</font> <font color="#FF0000">':'</font> <font color="#990000">||</font> password <b><font color="#0000FF">FROM</font></b> users</code></pre>
+						</p>
+
+						<div class="callout callout-info">
+							Различные реализации СУБД могут предоставлять другие способы объединения строк. Например, MySQL предоставляет
+							для этих целей функцию <a href="http://dev.mysql.com/doc/refman/5.5/en/string-functions.html#function_concat"><tt>CONCAT()</tt></a>.
+							За подробной информацией обращайтесь к документации по СУБД.
+						</div>
+
+						<p>
+							В некоторых случаях запрос, подверженный SQL-инъекции, имеет структуру, усложняющую или препятствующую
+							внедрению операторов SQL. Например, следующий код:
+
+<pre><code><font color="#009900">$author_id</font> <font color="#990000">=</font> <font color="#009900">$_GET</font><font color="#990000">[</font><font color="#FF0000">'author_id'</font><font color="#990000">];</font>
+<font color="#009900">$result</font> <font color="#990000">=</font> <b><font color="#000000">mysql_query</font></b><font color="#990000">(</font><font color="#FF0000">"SELECT author, title, text FROM news WHERE author = $author_id ORDER BY date DESC LIMIT 20"</font><font color="#990000">);</font></code></pre>
+
+							выбирает строки с указанным идентификатором <tt>author_id</tt>, сортирует их по дате и выводит 20 последних
+							записей. Простая подстановка оператора <tt>UNION</tt> вместо <tt>author_id</tt> приведёт к ошибке из-за
+							оставшейся части запроса: <code>ORDER BY date DESC LIMIT 20</code>. В этом случае часть запроса необходимо
+							экранировать при помощи символов комментария (<tt>--</tt>, <tt>/*</tt> или <tt>#</tt> в зависимости от СУБД).
+							Часть строки, отделённая этими символами, будет проигнорирована и запрос успешно выполнится.
+						</p>
+
+						<p>
+							При этом важно помнить, что все скобки и кавычки должны быть закрыты, чтобы не вызывать ошибок при выполнении
+							запроса. Если часть запроса экранируется, то соответствующие символы нужно передавать в явном виде.
+						</p>
+
+						<p>
+							Для разделения команд в языке SQL используется символ <tt>;</tt> (точка с запятой). Внедряя этот символ в
+							запрос, злоумышленник получает возможность выполнить несколько команд в одном запросе. Это позволяет выполнять
+							операции, отличные от применяемых в исходном запросе, например, вставлять, изменять или удалять строки.
+
+<pre><code><font color="#009900">$id</font> <font color="#990000">=</font> <font color="#009900">$_GET</font><font color="#990000">[</font><font color="#FF0000">'id'</font><font color="#990000">];</font>
+<font color="#009900">$result</font> <font color="#990000">=</font> <b><font color="#000000">mysql_query</font></b><font color="#990000">(</font><font color="#FF0000">"SELECT * FROM news WHERE id = $id"</font><font color="#990000">);</font></code></pre>
+
+							Передав в качестве <tt>id</tt> строку <code>-1; INSERT INTO users(username, password) VALUES ('foo', 'bar')</code>,
+							злоумышленник может несанкционированно вставить новую строку в таблицу <tt>users</tt>.
+						</p>
+
+						<div class="callout callout-info">
+							Не все СУБД поддерживают эту возможность. За подробной информацией обращайтесь к документации по СУБД.
+						</div>
+
+						<h4 id="mitigation">Предотвращение SQL-инъекций</h4>
+						<p>
+							Наиболее общими способами предотвращения SQL-инъекций являются фильтрация, экранирование
+							и проверка всех входных данных. В языке PHP для этого могут применяться такие функции, как
+							<a href="http://www.php.net/manual/en/function.addslashes.php"><tt>addslashes()</tt></a> и
+							<a href="http://www.php.net/manual/en/function.mysql-real-escape-string.php"><tt>mysql_real_escape_string()</tt></a>.
+						</p>
+
+						<p>
+							<tt>addslashes()</tt> экранирует специальные символы, добавляя к ним символ <tt>\</tt> (обратный слэш).
+							Таким образом, символ <tt>'</tt> заменяется на <tt>\'</tt>, <tt>"</tt> — на <tt>\"</tt> и т.д. Это
+							позволяет избежать внедрения SQL-кода только в том случае, когда экранируемая строка в запросе заключена
+							в кавычки.
+						</p>
+
+						<p>
+							<tt>mysql_real_escape_string()</tt> работает аналогично <tt>addslashes()</tt>, но учитывает особенности
+							диалекта MySQL, экранируя некоторые дополнительные символы. Как и <tt>addslashes()</tt>, она работает
+							только в случае, когда экранируемая строка заключена в кавычки.
+						</p>
+
+						<div class="callout callout-info">
+							Функции, аналогичные <tt>mysql_real_escape_string()</tt>, реализованы и для других СУБД. За подробной
+							информацией обращайтесь к <a href="http://www.php.net/manual/">руководству по PHP</a>.
+						</div>
+
+						<p>
+							Кроме того, в PHP существует ряд функций, позволяющих проверить значение параметра на принадлежность
+							к некоторому классу. Например, функция <a href="http://www.php.net/manual/en/function.is-numeric.php"><tt>is_numeric()</tt></a>
+							позволяет проверить, что параметр является числовым.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/lib/jquery-1.10.2.min.js"></script>
+		<script src="js/lib/bootstrap.min.js"></script>
+		<script>
+			$(function() {
+				$('#demo1-slot').html($('#demo1-field').val());
+				$('#demo2-slot').html($('#demo2-field').val());
+
+				$('#demo1-field').keyup(function() {
+					$('#demo1-slot').html($(this).val());
+				});
+				$('#demo2-field').keyup(function() {
+					$('#demo2-slot').html($(this).val());
+				});
+			});
+		</script>
+	</body>
+</html>
