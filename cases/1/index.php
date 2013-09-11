@@ -81,13 +81,13 @@
 							<div class="form-group">
 								<label for="login-field" class="col-lg-2 control-label">Логин</label>
 								<div class="col-lg-4">
-									<input type="text" name="login" class="form-control" id="login-field" autofocus required>
+									<input type="text" name="login" class="form-control" id="login-field" autocomplete="off" autofocus required>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="password-field" class="col-lg-2 control-label">Пароль</label>
 								<div class="col-lg-4">
-									<input type="password" name="password" class="form-control" id="password-field" required>
+									<input type="password" name="password" class="form-control" id="password-field" autocomplete="off" required>
 								</div>
 							</div>
 							<div class="form-group">
