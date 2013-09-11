@@ -46,7 +46,7 @@
 								<li><a href="../3/">Задание №3</a></li>
 							</ul>
 						</li>
-						<li><a href="https://github.com/toogle/sql-lab">Исходный код</a></li>
+						<li><a href="https://github.com/toogle/sql-lab" target="_blank">Исходный код</a></li>
 					</ul>
 				</div>
 
