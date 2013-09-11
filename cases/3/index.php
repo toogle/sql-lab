@@ -20,7 +20,7 @@
 		</style>
 
 		<!--[if lt IE 9]>
-			<script src="js/lib/respond.min.js"></script>
+			<script src="../../js/lib/respond.min.js"></script>
 		<![endif]-->
 	</head>
 	<body>
