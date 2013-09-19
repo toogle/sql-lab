@@ -72,7 +72,7 @@
 							$month = isset($_GET['month']) ? $_GET['month'] : date('n');
 							$limit = isset($_GET['limit']) ? $_GET['limit'] : 20;
 
-							$sql  = "SELECT id, time, sender, recipient, amount";
+							$sql  = "SELECT id, sender, recipient, amount, time";
 							$sql .= "  FROM transactions";
 							$sql .= "  WHERE sender = 1234567890123456";
 							$sql .= "    AND EXTRACT(MONTH FROM time) = ${month}";
