@@ -75,6 +75,7 @@
 								$html .= "<p>${row['review']}</p>";
 								$html .= "<p><b>Режиссёр:</b> ${row['director']}</p>";
 								$html .= "<p><b>Рейтинг:</b> " . number_format($row['rating'], 1) . " (${row['votes']} голосов)</p>";
+								$html .= "<a href=\".\" class=\"btn btn-default\">Вернуться к списку</a>";
 
 								echo $html;
 							}
