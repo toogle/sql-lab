@@ -97,8 +97,47 @@
 							</div>
 						</form>
 					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Подсказка
+							<a href="#" class="pull-right" data-toggle="collapse" data-target="#hint">показать</a>
+						</div>
+						<div id="hint" class="panel-body collapse">
+							<p>
+								Это задание имитирует простейшую форму авторизации на сайте. Результатом реализации
+								SQL-инъекции будет прохождение процедуры авторизации без обладания необходимыми для
+								этого идентификационными данными.
+							</p>
+
+							<p>
+								Уязвимый к SQL-инъекции код выглядит примерно так:
+<pre><code><font color="#009900">$username</font> <font color="#990000">=</font> <font color="#009900">$_GET</font><font color="#990000">[</font><font color="#FF0000">'username'</font><font color="#990000">];</font>
+<font color="#009900">$password</font> <font color="#990000">=</font> <font color="#009900">$_GET</font><font color="#990000">[</font><font color="#FF0000">'password'</font><font color="#990000">];</font>
+<font color="#009900">$result</font> <font color="#990000">=</font> <b><font color="#000000">mysql_query</font></b><font color="#990000">(</font><font color="#FF0000">"SELECT * FROM users WHERE username = '$username' AND password = SHA1('$password')"</font><font color="#990000">);</font></code></pre>
+
+								Таким образом, для реализации атаки необходимо подобрать такие значения имени
+								пользователя и пароля, которые изменят логику выполнения запроса и позволят избежать
+								непосредственной проверки идентификационных данных. Одним из таких вариантов является
+								внедрение заведомо верного условия (например, <code>'1' = '1'</code>) совместно с
+								логическим оператором ИЛИ (OR).
+							</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
+
+		<script src="../../js/lib/jquery-1.11.1.min.js"></script>
+		<script src="../../js/lib/bootstrap.min.js"></script>
+		<script>
+			$('#hint').on('show.bs.collapse', function() {
+				$('a[data-target="#hint"]').html('скрыть');
+			});
+
+			$('#hint').on('hide.bs.collapse', function() {
+				$('a[data-target="#hint"]').html('показать');
+			});
+		</script>
 	</body>
 </html>

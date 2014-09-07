@@ -110,8 +110,44 @@
 						}
 						?>
 					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Подсказка
+							<a href="#" class="pull-right" data-toggle="collapse" data-target="#hint">показать</a>
+						</div>
+						<div id="hint" class="panel-body collapse">
+							<p>
+								Это задание имитирует таблицу с рядом наименований, по каждому из которых
+								можно получить дополнительную информацию. Результатом реализации SQL-инъекции
+								будет возможность проверять значения различных системных переменных, например,
+								<code>@@version</code>, содержащей номер версии MySQL.
+							</p>
+
+							<p>
+								В некоторых случаях SQL-инъекция может быть реализована, но результат выполнения
+								запроса пользователю не представляется. Тогда может быть проведена слепая
+								(<i>blind</i>) инъекция. Для проверки её выполнимости к уязвимому параметру
+								необходимо дописать сначала верное условие (<code>AND 1 = 1</code>), а затем
+								неверное (<code>AND 1 = 2</code>) и убедиться, что в первом случае страница не
+								изменяется.
+							</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
+
+		<script src="../../js/lib/jquery-1.11.1.min.js"></script>
+		<script src="../../js/lib/bootstrap.min.js"></script>
+		<script>
+			$('#hint').on('show.bs.collapse', function() {
+				$('a[data-target="#hint"]').html('скрыть');
+			});
+
+			$('#hint').on('hide.bs.collapse', function() {
+				$('a[data-target="#hint"]').html('показать');
+			});
+		</script>
 	</body>
 </html>

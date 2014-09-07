@@ -129,8 +129,43 @@
 							<button type="submit" class="btn btn-default">Фильтровать</button>
 						</form>
 					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Подсказка
+							<a href="#" class="pull-right" data-toggle="collapse" data-target="#hint">показать</a>
+						</div>
+						<div id="hint" class="panel-body collapse">
+							<p>
+								Это задание имитирует простейший журнал транзакций интернет-банка, который
+								позволяет фильтровать записи по месяцам. Результатом реализации SQL-инъекции
+								будет получение <abbr title="несанкционированный доступ">НСД</abbr> к записям
+								обо всех транзакциях, содержащихся в <abbr title="база данных">БД</abbr>.
+							</p>
+
+							<p>
+								Зачастую, форма на странице не позволяет пользователю вводить произвольные
+								данные в текстовое поле, а только выбрать из предложенных вариантов (например, в
+								выпадающем списке). В таком случае, необходимо обратить внимание на изменения
+								в адресной строке браузера после отправки формы. Возможно, данные из формы будут
+								переданы на сервер через <abbr title="Uniform Resource Locator">URL</abbr>.
+							</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
+
+		<script src="../../js/lib/jquery-1.11.1.min.js"></script>
+		<script src="../../js/lib/bootstrap.min.js"></script>
+		<script>
+			$('#hint').on('show.bs.collapse', function() {
+				$('a[data-target="#hint"]').html('скрыть');
+			});
+
+			$('#hint').on('hide.bs.collapse', function() {
+				$('a[data-target="#hint"]').html('показать');
+			});
+		</script>
 	</body>
 </html>
