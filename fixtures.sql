@@ -1,7 +1,7 @@
 -- CREATE DATABASE `sql-lab` CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- CREATE USER 'sql-lab'@'localhost' IDENTIFIED BY 'sql-lab';
--- GRANT ALL PRIVILEGES ON `sql-lab`.* TO 'sql-lab'@'localhost';
+-- GRANT SELECT ON `sql-lab`.* TO 'sql-lab'@'localhost';
 
 -- USE `sql-lab`;
 
