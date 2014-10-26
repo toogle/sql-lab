@@ -57,8 +57,10 @@
 						if (isset($_POST['login']) && isset($_POST['password'])) {
 							// NOTE: The following code intended for demonstration purposes only.
 							//       It is EXTREMELY DANGER to use it for real applications.
-							$conn = @mysql_connect('localhost', 'sql-lab', 'sql-lab');
-							@mysql_select_db('sql-lab', $conn);
+							$conn = @mysqli_connect('localhost', 'sql-lab', 'sql-lab', 'sql-lab');
+							mysqli_query($conn, "SET NAMES utf8");
+							mysqli_query($conn, "SET CHARACTER SET utf8");
+							mysqli_set_charset($conn, 'utf8');
 
 							$sql  = "SELECT login, password";
 							$sql .= "  FROM users";
@@ -69,11 +71,15 @@
 								die('Запрос не может быть выполнен: обнаружен недопустимый оператор!');
 							}
 
-							$res = mysql_query($sql, $conn);
-							if ($res && mysql_num_rows($res) != 0)
-								echo '<div class="alert alert-success">Вы успешно авторизованы!</div>';
-							else
-								echo '<div class="alert alert-danger">Неверный логин и/или пароль!</div>';
+							$res = mysqli_query($conn, $sql);
+							if ($res) {
+								if (mysqli_num_rows($res) != 0)
+									echo '<div class="alert alert-success">Вы успешно авторизованы!</div>';
+								else
+									echo '<div class="alert alert-danger">Неверный логин и/или пароль!</div>';
+
+								mysqli_free_result($res);
+							}
 						}
 						?>
 

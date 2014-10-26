@@ -55,8 +55,10 @@
 						<?php
 						// NOTE: The following code intended for demonstration purposes only.
 						//       It is EXTREMELY DANGER to use it for real applications.
-						$conn = @mysql_connect('localhost', 'sql-lab', 'sql-lab');
-						@mysql_select_db('sql-lab', $conn);
+						$conn = @mysqli_connect('localhost', 'sql-lab', 'sql-lab', 'sql-lab');
+						mysqli_query($conn, "SET NAMES utf8");
+						mysqli_query($conn, "SET CHARACTER SET utf8");
+						mysqli_set_charset($conn, 'utf8');
 
 						if (isset($_GET['id'])) {
 							$sql  = "SELECT rating, title, year, director, review, votes";
@@ -67,9 +69,9 @@
 								die('Запрос не может быть выполнен: обнаружен недопустимый оператор!');
 							}
 
-							$res = mysql_query($sql, $conn);
+							$res = mysqli_query($conn, $sql);
 							if ($res) {
-								$row = mysql_fetch_assoc($res);
+								$row = mysqli_fetch_assoc($res);
 
 								$html  = "<h4>${row['title']} <small>(${row['year']})</small></h4>";
 								$html .= "<p>${row['review']}</p>";
@@ -78,6 +80,8 @@
 								$html .= "<a href=\".\" class=\"btn btn-default\">Вернуться к списку</a>";
 
 								echo $html;
+
+								mysqli_free_result($res);
 							}
 						} else {
 							echo "<h4>Список фильмов</h4>";
@@ -86,7 +90,7 @@
 							$sql .= "  FROM reviews";
 							$sql .= "  ORDER BY rating DESC";
 
-							$res = mysql_query($sql, $conn);
+							$res = mysqli_query($conn, $sql);
 							if ($res) {
 								$html  = "<table class=\"table\">";
 								$html .= "  <tr>";
@@ -95,7 +99,7 @@
 								$html .= "    <th>Режиссёр</th>";
 								$html .= "  </tr>";
 
-								while ($row = mysql_fetch_assoc($res)) {
+								while ($row = mysqli_fetch_assoc($res)) {
 									$html .= "  <tr>";
 									$html .= "    <td>" . number_format($row['rating'], 1) . "</td>";
 									$html .= "    <td><a href=\"?id=${row['id']}\">${row['title']} (${row['year']})</a></td>";
@@ -106,6 +110,8 @@
 								$html .= "</table>";
 
 								echo $html;
+
+								mysqli_free_result($res);
 							}
 						}
 						?>
