@@ -10,12 +10,16 @@
 		<link href="../../css/bootstrap.min.css" rel="stylesheet">
 
 		<style>
-			h4 {
-				margin-bottom: 30px;
+			.heading {
+				font-size: 14pt;
 			}
-
+			
 			.nav-inner {
 				margin-left: 10px;
+			}
+			
+			.morespace {
+				margin-bottom: 30px;
 			}
 		</style>
 
@@ -53,7 +57,19 @@
 
 				<div class="col-md-9">
 					<div class="well well-lg">
-						<h4>Прайс-лист на кофе</h4>
+						<form class="form-inline morespace" method="GET">
+							<span class="heading">Прайс-лист на кофе</span>		
+							<div class="btn-group navbar-right" id="manufacturers">
+								<button name="manufacturer" class="btn btn-default" value="Italy"><img src="flags/it.png" title="Италия"/></button>
+								<button name="manufacturer" class="btn btn-default" value="Spain"><img src="flags/es.png" title="Испания"/></button>
+								<button name="manufacturer" class="btn btn-default" value="Belgium"><img src="flags/bg.png" title="Бельгия"/></button>
+								<button name="manufacturer" class="btn btn-default" value="Switzerland"><img src="flags/ch.png" title="Швейцария"/></button>
+								<button name="manufacturer" class="btn btn-default" value="India"><img src="flags/in.png"/ title="Индия"></button>
+								<button name="manufacturer" class="btn btn-default" value="Dominicana"><img src="flags/do.png"/ title="Доминикана"></button>
+								<button name="manufacturer" class="btn btn-default" value="Russia"><img src="flags/ru.png"/ title="Россия"></button>
+								<button name="manufacturer" class="btn btn-default" value="Finland"><img src="flags/fi.png" title="Финляндия"/></button>
+							</div>							
+						</form>
 						<table class="table">
 							<tr>
 								<th>Марка</td>							
@@ -72,9 +88,18 @@
 
 							$manufacturer = isset($_GET['manufacturer']) ? $_GET['manufacturer'] : $null;
 							
-							$sql  = "SELECT name, ratio, price";
-							$sql .= "  FROM coffee";
-							$sql .= "  WHERE manufacturer = '${manufacturer}'";
+							if (isset($manufacturer))
+							{
+								$sql  = "SELECT name, ratio, price";
+								$sql .= "  FROM coffee";
+								$sql .= "  WHERE manufacturer = '${manufacturer}'";
+							}
+							else
+							{
+								$sql  = "SELECT * ";
+								$sql .= "  FROM coffee";
+								$sql .= "  ORDER BY price";
+							}
 
 							if (preg_match('/INSERT|UPDATE|DELETE|CREATE|ALTER|DROP/i', $sql)) {
 								die('Запрос не может быть выполнен: обнаружен недопустимый оператор!');
@@ -104,23 +129,6 @@
 							mysqli_free_result($res);
 							?>
 						</table>
-
-						<form class="form-inline" method="GET">
-							<div class="form-group">
-								<select class="form-control" id="manufacturer-select" name="manufacturer">
-									<option>Выберите страну-производителя</option>
-									<option value="Italy">Италия</option>
-									<option value="Spain">Испания</option>
-									<option value="Belgium">Бельгия</option>
-									<option value="Switzerland">Швейцария</option>
-									<option value="India">Индия</option>
-									<option value="Dominicana">Доминикана</option>
-									<option value="Russia">Россия</option>
-									<option value="Finland">Финляндия</option>
-								</select>
-							</div>
-							<button type="submit" class="btn btn-default">Показать кофе</button>
-						</form>
 					</div>
 
 					<div class="panel panel-default">
@@ -141,7 +149,7 @@
 								позволяет объединять результаты нескольких запросов, в том числе в разные таблицы.
 								Однако необязательно сразу пытаться угадывать и подбирать возможные имена таких 
 								таблиц и их колонок. В БД существуют виртуальные таблицы, содержащие ее метаданные. 
-								В mySQL они находятся в схеме <i>information_schema</i>.
+								В MySQL они находятся в схеме <i>information_schema</i>.
 							</p>
 						</div>
 					</div>
