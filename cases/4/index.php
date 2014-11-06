@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>Задание №2 / Лабораторная работа №1. SQL-инъекции</title>
+		<title>Задание №4 / Лабораторная работа №1. SQL-инъекции</title>
 		<meta name="description" content="SQL Injection Lab">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -42,9 +42,9 @@
 							<a href="#">Рабочее задание</a>
 							<ul class="nav nav-pills nav-stacked nav-inner">
 								<li><a href="../1/">Задание №1</a></li>
-								<li class="active"><a href=".">Задание №2</a></li>
+								<li><a href="../2/">Задание №2</a></li>
 								<li><a href="../3/">Задание №3</a></li>
-								<li><a href="../4/">Задание №4</a></li>
+								<li class="active"><a href=".">Задание №4</a></li>
 							</ul>
 						</li>
 						<li><a href="https://github.com/toogle/sql-lab" target="_blank">Исходный код</a></li>
@@ -67,10 +67,8 @@
 
 							// NOTE: The following code intended for demonstration purposes only.
 							//       It is EXTREMELY DANGER to use it for real applications.
-							$conn = @mysqli_connect('localhost', 'sql-lab', 'sql-lab', 'sql-lab');
-							mysqli_query($conn, "SET NAMES utf8");
-							mysqli_query($conn, "SET CHARACTER SET utf8");
-							mysqli_set_charset($conn, 'utf8');
+							$conn = @mysql_connect('localhost', 'sql-lab', 'sql-lab');
+							@mysql_select_db('sql-lab', $conn);
 
 							$month = isset($_GET['month']) ? $_GET['month'] : date('n');
 							$limit = isset($_GET['limit']) ? $_GET['limit'] : 20;
@@ -86,10 +84,10 @@
 								die('Запрос не может быть выполнен: обнаружен недопустимый оператор!');
 							}
 
-							$res = mysqli_query($conn, $sql);
+							$res = mysql_query($sql, $conn);
 							if ($res) {
-								if (mysqli_num_rows($res) > 0) {
-									while ($row = mysqli_fetch_assoc($res)) {
+								if (mysql_num_rows($res) > 0) {
+									while ($row = mysql_fetch_array($res)) {
 										$html  = "<tr>";
 										$html .= "  <td>${row['id']}</td>";
 										$html .= "  <td>${row['sender']}</td>";
@@ -107,8 +105,6 @@
 									
 									echo $html;
 								}
-
-								mysqli_free_result($res);
 							}
 							?>
 						</table>
@@ -142,18 +138,18 @@
 						</div>
 						<div id="hint" class="panel-body collapse">
 							<p>
-								Это задание имитирует простейший журнал транзакций интернет-банка, который
-								позволяет фильтровать записи по месяцам. Результатом реализации SQL-инъекции
-								будет получение <abbr title="несанкционированный доступ">НСД</abbr> к записям
-								обо всех транзакциях, содержащихся в <abbr title="база данных">БД</abbr>.
+								С помощью адресной строки можно попробовать вытащить не только данные таблицы 
+								для этой страницы, но и данные из каких-нибудь других таблиц в этой БД. Таким 
+								образом можно, например, узнать логины и пароли пользователей, которые
+								используются на этом же сайте на странице авторизации. 								
 							</p>
-
+							
 							<p>
-								Зачастую, форма на странице не позволяет пользователю вводить произвольные
-								данные в текстовое поле, а только выбрать из предложенных вариантов (например, в
-								выпадающем списке). В таком случае, необходимо обратить внимание на изменения
-								в адресной строке браузера после отправки формы. Возможно, данные из формы будут
-								переданы на сервер через <abbr title="Uniform Resource Locator">URL</abbr>.
+								Для того, чтобы это сделать, можно воспользоваться SQL-оператором UNION, который
+								позволяет объединять результаты нескольких запросов, в том числе в разные таблицы.
+								Однако необязательно сразу пытаться угадывать и подбирать возможные имена таких 
+								таблиц и их колонок. В БД существуют виртуальные таблицы, содержащие ее метаданные. 
+								В mySQL они находятся в схеме <i>information_schema</i>.
 							</p>
 						</div>
 					</div>
