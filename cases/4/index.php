@@ -65,8 +65,10 @@
 
 							// NOTE: The following code intended for demonstration purposes only.
 							//       It is EXTREMELY DANGER to use it for real applications.
-							$conn = @mysql_connect('localhost', 'sql-lab', 'sql-lab');
-							@mysql_select_db('sql-lab', $conn);
+							$conn = @mysqli_connect('localhost', 'sql-lab', 'sql-lab', 'sql-lab');
+							mysqli_query($conn, "SET NAMES utf8");
+							mysqli_query($conn, "SET CHARACTER SET utf8");
+							mysqli_set_charset($conn, 'utf8');
 
 							$manufacturer = isset($_GET['manufacturer']) ? $_GET['manufacturer'] : $null;
 							
@@ -78,10 +80,10 @@
 								die('Запрос не может быть выполнен: обнаружен недопустимый оператор!');
 							}
 
-							$res = mysql_query($sql, $conn);
+							$res = mysqli_query($conn, $sql);
 							if ($res) {
-								if (mysql_num_rows($res) > 0) {
-									while ($row = mysql_fetch_array($res)) {
+								if (mysqli_num_rows($res) > 0) {
+									while ($row = mysqli_fetch_assoc($res)) {
 										$html  = "<tr>";
 										$html .= "  <td>${row['name']}</td>";
 										$html .= "  <td>${row['ratio']}</td>";
@@ -98,6 +100,8 @@
 									echo $html;
 								}
 							}
+							
+							mysqli_free_result($res);
 							?>
 						</table>
 
