@@ -53,14 +53,12 @@
 
 				<div class="col-md-9">
 					<div class="well well-lg">
-						<h4>Журнал транзакций</h4>
+						<h4>Прайс-лист на кофе</h4>
 						<table class="table">
 							<tr>
-								<th>Идентификатор</td>
-								<th>Отправитель</td>
-								<th>Получатель</td>
-								<th>Сумма</td>
-								<th>Время</td>
+								<th>Марка</td>							
+								<th>Соотношение арабика/робуста, %</td>
+								<th>Цена, руб./кг.</td>
 							</tr>
 							<?php
 							date_default_timezone_set('Europe/Moscow');
@@ -70,15 +68,11 @@
 							$conn = @mysql_connect('localhost', 'sql-lab', 'sql-lab');
 							@mysql_select_db('sql-lab', $conn);
 
-							$month = isset($_GET['month']) ? $_GET['month'] : date('n');
-							$limit = isset($_GET['limit']) ? $_GET['limit'] : 20;
-
-							$sql  = "SELECT id, sender, recipient, amount, time";
-							$sql .= "  FROM transactions";
-							$sql .= "  WHERE sender = 1234567890123456";
-							$sql .= "    AND EXTRACT(MONTH FROM time) = ${month}";
-							$sql .= "  ORDER BY time ASC";
-							$sql .= "  LIMIT ${limit}";
+							$manufacturer = isset($_GET['manufacturer']) ? $_GET['manufacturer'] : $null;
+							
+							$sql  = "SELECT name, ratio, price";
+							$sql .= "  FROM coffee";
+							$sql .= "  WHERE manufacturer = '${manufacturer}'";
 
 							if (preg_match('/INSERT|UPDATE|DELETE|CREATE|ALTER|DROP/i', $sql)) {
 								die('Запрос не может быть выполнен: обнаружен недопустимый оператор!');
@@ -89,11 +83,9 @@
 								if (mysql_num_rows($res) > 0) {
 									while ($row = mysql_fetch_array($res)) {
 										$html  = "<tr>";
-										$html .= "  <td>${row['id']}</td>";
-										$html .= "  <td>${row['sender']}</td>";
-										$html .= "  <td>${row['recipient']}</td>";
-										$html .= "  <td>${row['amount']}</td>";
-										$html .= "  <td>${row['time']}</td>";
+										$html .= "  <td>${row['name']}</td>";
+										$html .= "  <td>${row['ratio']}</td>";
+										$html .= "  <td>${row['price']}</td>";
 										$html .= "</tr>";
 	
 										echo $html;
@@ -111,23 +103,19 @@
 
 						<form class="form-inline" method="GET">
 							<div class="form-group">
-								<select class="form-control" id="month-select" name="month">
-									<option value="<?php echo date('n'); ?>">Выберите месяц</option>
-									<option value="1">Январь</option>
-									<option value="2">Февраль</option>
-									<option value="3">Март</option>
-									<option value="4">Апрель</option>
-									<option value="5">Май</option>
-									<option value="6">Июнь</option>
-									<option value="7">Июль</option>
-									<option value="8">Август</option>
-									<option value="9">Сентябрь</option>
-									<option value="10">Октябрь</option>
-									<option value="11">Ноябрь</option>
-									<option value="12">Декабрь</option>
+								<select class="form-control" id="manufacturer-select" name="manufacturer">
+									<option>Выберите страну-производителя</option>
+									<option value="Italy">Италия</option>
+									<option value="Spain">Испания</option>
+									<option value="Belgium">Бельгия</option>
+									<option value="Switzerland">Швейцария</option>
+									<option value="India">Индия</option>
+									<option value="Dominicana">Доминикана</option>
+									<option value="Russia">Россия</option>
+									<option value="Finland">Финляндия</option>
 								</select>
 							</div>
-							<button type="submit" class="btn btn-default">Фильтровать</button>
+							<button type="submit" class="btn btn-default">Показать кофе</button>
 						</form>
 					</div>
 
