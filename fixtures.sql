@@ -187,3 +187,24 @@ INSERT INTO `albums` VALUES
 	(23, 'Black Rebel Motorcycle Club - Beat The Devil`s Tattoo', 2010, 'USA', '65:01'),
 	(24, 'The Cure - Disintegration', 1989, 'UK', '71:47'),
 	(25, 'Duran Duran - The Wedding Album', 1993, 'UK', '63:34');
+
+
+DROP TABLE IF EXISTS `actors`;
+
+CREATE TABLE `actors` (
+    `id` INTEGER PRIMARY KEY,
+    `name` VARCHAR(255)
+) ENGINE=innodb;
+
+INSERT INTO `actors` VALUES
+	(1, 'Абдулов'),
+	(2, 'Безруков'),
+	(3, 'Бодров'),
+	(4, 'Высоцкий'),
+	(5, 'Демьяненко'),
+	(6, 'Джигарханян'),
+	(7, 'Леонов'),
+	(8, 'Миронов'),
+	(9, 'Мягков'),
+	(10, 'Никулин'),
+	(11, 'Хабенский');
