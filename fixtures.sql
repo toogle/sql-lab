@@ -160,6 +160,6 @@ CREATE TABLE `actors` (
 ) ENGINE=innodb;
 
 INSERT INTO `actors` VALUES
-	(1, 'Edward Norton', LOAD_FILE('P:/photos/Edward Norton.jpg')),
-	(2, 'Jim Carry', LOAD_FILE('P:/photos/Jim Carry.png')),
-	(3, 'Jim Parsons', LOAD_FILE('P:/photos/Jim Parsons.jpg'));
+	(1, 'Edward Norton', LOAD_FILE('P:\вузоло\УИРы\УИР 3\sql-lab\cases\5\frames\Edward Norton.jpg')),
+	(2, 'Jim Carry', LOAD_FILE('P:\вузоло\УИРы\УИР 3\sql-lab\cases\5\frames\Jim Carry.png')),
+	(3, 'Jim Parsons', LOAD_FILE('P:\вузоло\УИРы\УИР 3\sql-lab\cases\5\frames\Jim Parsons.jpg'));
