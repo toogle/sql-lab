@@ -156,10 +156,10 @@ DROP TABLE IF EXISTS `actors`;
 CREATE TABLE `actors` (
     `id` INTEGER PRIMARY KEY,
     `name` VARCHAR(255),
-    `photo` BLOB,
+    `path` VARCHAR(255)
 ) ENGINE=innodb;
 
 INSERT INTO `actors` VALUES
-	(1, 'Edward Norton', LOAD_FILE('P:\вузоло\УИРы\УИР 3\sql-lab\cases\5\frames\Edward Norton.jpg')),
-	(2, 'Jim Carry', LOAD_FILE('P:\вузоло\УИРы\УИР 3\sql-lab\cases\5\frames\Jim Carry.png')),
-	(3, 'Jim Parsons', LOAD_FILE('P:\вузоло\УИРы\УИР 3\sql-lab\cases\5\frames\Jim Parsons.jpg'));
+	(1, 'Эдвард Нортон', 'frames/Edward Norton.jpg'),
+	(2, 'Джим Керри', 'frames/Jim Carrey.png'),
+	(3, 'Джим Парсонс', 'frames/Jim Parsons.jpg');
