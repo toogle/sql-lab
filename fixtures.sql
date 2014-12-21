@@ -149,7 +149,7 @@ INSERT INTO `reviews` VALUES
 	(3, 9.0, 'The Godfather: Part II', 1974, 'Francis Ford Coppola', 'The early life and career of Vito Corleone in 1920s New York is portrayed while his son, Michael, expands and tightens his grip on his crime syndicate stretching from Lake Tahoe, Nevada to pre-revolution 1958 Cuba.', 470330),
 	(4, 8.9, 'Pulp Fiction', 1994, 'Quentin Tarantino', 'The lives of two mob hit men, a boxer, a gangster''s wife, and a pair of diner bandits intertwine in four tales of violence and redemption.', 798792),
 	(5, 8.9, 'Il buono, il brutto, il cattivo.', 1966, 'Sergio Leone', 'A bounty hunting scam joins two men in an uneasy alliance against a third in a race to find a fortune in gold buried in a remote cemetery.', 310172);
-
+	
 	
 DROP TABLE IF EXISTS `coffee`;
 
@@ -178,3 +178,17 @@ INSERT INTO `coffee` VALUES
 	(14, 'Aroti Super Crema', 'Russia', '40/60', 420),
 	(15, 'Paulig President', 'Finland', '100/0', 750),
 	(16, 'Paulig Espresso Barista', 'Finland', '80/20', 1110);
+
+
+DROP TABLE IF EXISTS `actors`;
+
+CREATE TABLE `actors` (
+    `id` INTEGER PRIMARY KEY,
+    `name` VARCHAR(255),
+    `path` VARCHAR(255)
+) ENGINE=innodb;
+
+INSERT INTO `actors` VALUES
+	(1, 'Эдвард Нортон', 'frames/Edward Norton.jpg'),
+	(2, 'Джим Керри', 'frames/Jim Carrey.png'),
+	(3, 'Джим Парсонс', 'frames/Jim Parsons.jpg');
