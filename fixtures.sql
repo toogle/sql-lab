@@ -192,3 +192,41 @@ INSERT INTO `actors` VALUES
 	(1, 'Эдвард Нортон', 'frames/Edward Norton.jpg'),
 	(2, 'Джим Керри', 'frames/Jim Carrey.png'),
 	(3, 'Джим Парсонс', 'frames/Jim Parsons.jpg');
+	
+
+DROP TABLE IF EXISTS `albums`;
+
+CREATE TABLE `albums` (
+    `id` INTEGER PRIMARY KEY,
+    `title` VARCHAR(255),
+    `year` INTEGER,
+	`country` VARCHAR(50),
+    `length` VARCHAR(5)
+) ENGINE=innodb;
+
+INSERT INTO `albums` VALUES
+	(1, 'London Grammar - If You Wait', 2013, 'UK', '60:13'),
+	(2, 'Damon Albarn - Everyday Robots', 2014, 'UK', '71:51'),
+	(3, 'Pink Floyd - The Dark Side Of The Moon', 1975, 'UK', '42:59'),
+	(4, 'Kasabian - 48:13', 2014, 'UK', '48:13'),
+	(5, 'White Lies - Big TV', 2013, 'UK', '45:09'),
+	(6, 'The Doors - The Doors', 1967, 'USA', '44:48'), 
+	(7, 'alt-J - This Is All Yours', 2014, 'UK', '53:04'),
+	(8, 'Death Cab For Cutie - Plans', 2005, 'USA', '46:44'),
+	(9, 'Coldplay - Ghost Stories', 2014, 'UK', '35:08'),
+	(10, 'Kings Of Convenience - Quiet Is The New Loud', 2001, 'Norway', '44:40'),
+	(11, 'The Smiths - The Queen Is Dead', 1986, 'UK', '37:07'),
+	(12, 'Glass Animals - ZABA', 2014, 'UK', '45:40'),
+	(13, 'Keane - Hopes & Fears', 2004, 'UK', '45:12'),
+	(14, 'The Libertines - The Libertines', 2004, 'UK', '42:04'),
+	(15, 'MGMT - Oracular Spectacular', 2007, 'USA', '40:18'),
+	(16, 'The XX - XX', 2009, 'UK', '38:00'),
+	(17, 'God Is An Astronaut - All Is Violent, All Is Bright', 2006, 'Ireland', '48:17'),
+	(18, 'Suede - Dog Man Star', 1994, 'UK', '57:50'),
+	(19, 'Oasis - Definitely Maybe', 1994, 'UK', '56:14'),
+	(20, 'Muse - Origin Of Symmetry', 2001, 'UK', '51:41'),
+	(21, 'Radiohead - OK Computer', 1997, 'UK', '52:27'),
+	(22, 'Depeche Mode - Songs Of Faith And Devotion', 1993, 'UK', '47:26'),
+	(23, 'Black Rebel Motorcycle Club - Beat The Devil`s Tattoo', 2010, 'USA', '65:01'),
+	(24, 'The Cure - Disintegration', 1989, 'UK', '71:47'),
+	(25, 'Duran Duran - The Wedding Album', 1993, 'UK', '63:34');
