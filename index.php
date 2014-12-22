@@ -35,7 +35,7 @@
 						<li class="active"><a href="#">Главная</a></li>
 						<li><a href="documentation.php">Методическое пособие</a></li>
 						<li>
-							<a class="accordion-toggle" href="#cases" data-toggle="collapse">Рабочее задание</a>						
+							<a class="accordion-toggle" href="#cases" data-toggle="collapse">Рабочее задание</a>
 							<ul id="cases" class="nav nav-pills nav-stacked nav-inner collapse">
 								<?php
 								$pathsAreSet = $_COOKIE['pathsAreSet'];
