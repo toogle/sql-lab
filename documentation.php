@@ -65,12 +65,42 @@
 						<li>
 							<a class="accordion-toggle" href="#cases" data-toggle="collapse">Рабочее задание</a>
 							<ul id="cases" class="nav nav-pills nav-stacked nav-inner collapse">
-								<li><a href="cases/1/">Задание №1</a></li>
-								<li><a href="cases/2/">Задание №2</a></li>
-								<li><a href="cases/3/">Задание №3</a></li>
-								<li><a href="cases/4/">Задание №4</a></li>
-								<li><a href="cases/5/">Задание №5</a></li>
-								<li><a href="cases/6/">Задание №6</a></li>
+								<?php
+								$pathsAreSet = $_COOKIE['pathsAreSet'];
+								
+								if ($pathsAreSet)
+								{
+									$taskNumber1 = $_COOKIE['taskNumber1'];
+									$taskNumber2 = $_COOKIE['taskNumber2'];
+									$taskNumber3 = $_COOKIE['taskNumber3'];
+								}
+								else
+								{							
+									$taskDirs = glob("cases/*", GLOB_ONLYDIR);
+									$numberOfTasks = count($taskDirs);
+									$taskNumbers = range(1, $numberOfTasks);
+									
+									$randomTasks = array_rand($taskNumbers, 3);					
+									$taskNumber1 = $taskNumbers[$randomTasks[0]];
+									$taskNumber2 = $taskNumbers[$randomTasks[1]];
+									$taskNumber3 = $taskNumbers[$randomTasks[2]];
+									
+									setcookie('taskNumber1', $taskNumber1);
+									setcookie('taskNumber2', $taskNumber2);
+									setcookie('taskNumber3', $taskNumber3);
+									setcookie('pathsAreSet', True);
+								}
+								
+								$path1 = "cases/$taskNumber1/";
+								$path2 = "cases/$taskNumber2/";
+								$path3 = "cases/$taskNumber3/";
+										
+								$html  = '<li><a href="' . $path1 . '">Задание №1</a></li>';		
+								$html .= '<li><a href="' . $path2 . '">Задание №2</a></li>';										
+								$html .= '<li><a href="' . $path3 . '">Задание №3</a></li>';	
+
+								echo $html;
+								?>
 							</ul>
 						</li>
 						<li><a href="https://github.com/toogle/sql-lab" target="_blank">Исходный код</a></li>

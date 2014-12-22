@@ -37,16 +37,25 @@
 				<div class="col-md-3">
 					<ul class="nav nav-pills nav-stacked">
 						<li><a href="../../">Главная</a></li>
-						<li><a href="../../documentation.html">Методическое пособие</a></li>
+						<li><a href="../../documentation.php">Методическое пособие</a></li>
 						<li>
 							<a href="#">Рабочее задание</a>
 							<ul class="nav nav-pills nav-stacked nav-inner">
-								<li><a href="../1/">Задание №1</a></li>
-								<li><a href="../2/">Задание №2</a></li>
-								<li class="active"><a href=".">Задание №3</a></li>
-								<li><a href="../4/">Задание №4</a></li>
-								<li><a href="../5/">Задание №5</a></li>
-								<li><a href="../6/">Задание №6</a></li>
+								<?php								
+								$taskNumber1 = $_COOKIE['taskNumber1'];
+								$taskNumber2 = $_COOKIE['taskNumber2'];
+								$taskNumber3 = $_COOKIE['taskNumber3'];
+										
+								$path1 = "../$taskNumber1/";
+								$path2 = "../$taskNumber2/";
+								$path3 = "../$taskNumber3/";
+										
+								$html  = '<li><a href="' . $path1 . '">Задание №1</a></li>';		
+								$html .= '<li><a href="' . $path2 . '">Задание №2</a></li>';										
+								$html .= '<li><a href="' . $path3 . '">Задание №3</a></li>';	
+								
+								echo $html;
+								?>
 							</ul>
 						</li>
 						<li><a href="https://github.com/toogle/sql-lab" target="_blank">Исходный код</a></li>
