@@ -98,14 +98,14 @@
 										$html .= "  <td>${row['amount']}</td>";
 										$html .= "  <td>${row['time']}</td>";
 										$html .= "</tr>";
-	
+
 										echo $html;
 									}
 								} else {
 									$html  = "<tr>";
 									$html .= "  <td colspan=\"5\">Ничего не найдено.</td>";
 									$html .= "</tr>";
-									
+
 									echo $html;
 								}
 
