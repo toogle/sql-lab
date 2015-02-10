@@ -149,3 +149,84 @@ INSERT INTO `reviews` VALUES
 	(3, 9.0, 'The Godfather: Part II', 1974, 'Francis Ford Coppola', 'The early life and career of Vito Corleone in 1920s New York is portrayed while his son, Michael, expands and tightens his grip on his crime syndicate stretching from Lake Tahoe, Nevada to pre-revolution 1958 Cuba.', 470330),
 	(4, 8.9, 'Pulp Fiction', 1994, 'Quentin Tarantino', 'The lives of two mob hit men, a boxer, a gangster''s wife, and a pair of diner bandits intertwine in four tales of violence and redemption.', 798792),
 	(5, 8.9, 'Il buono, il brutto, il cattivo.', 1966, 'Sergio Leone', 'A bounty hunting scam joins two men in an uneasy alliance against a third in a race to find a fortune in gold buried in a remote cemetery.', 310172);
+	
+	
+DROP TABLE IF EXISTS `coffee`;
+
+CREATE TABLE `coffee` (
+    `id` INTEGER PRIMARY KEY,
+    `name` VARCHAR(255),
+    `manufacturer` VARCHAR(255),
+	`ratio` VARCHAR(10),
+	`price` INTEGER
+) ENGINE=innodb;
+
+INSERT INTO `coffee` VALUES
+	(1, 'Lavazza Gran Crema Espresso', 'Italy', '40/60', 860),
+	(2, 'Oquendo Cafeteria Mezcla', 'Spain', '80/20', 1110),
+	(3, 'Oquendo Hosteleria Natural', 'Spain', '70/30', 980),
+	(4, 'Liegeois Magnifico', 'Belgium', '80/20', 1250),
+	(5, 'Liegeois Espresso Venezia', 'Belgium', '90/10', 975),
+	(6, 'La Semeuse Mocca', 'Switzerland', '100/0', 1230),
+	(7, 'La Semeuse Don Marco', 'Switzerland', '80/20', 1190),
+	(8, 'Compagnia Dell Arabica', 'India', '100/0', 1110),
+	(9, 'Santo Domingo Aroma', 'Dominicana', '100/0', 1300),
+	(10, 'Santo Domingo Puro Cafe', 'Dominicana', '100/0', 1100),
+	(11, 'Alta Roma Platino', 'Russia', '90/10', 740),
+	(12, 'Chornaya Karta', 'Russia', '100/0', 350),
+	(13, 'Aroti Espresso', 'Russia', '80/20', 550),
+	(14, 'Aroti Super Crema', 'Russia', '40/60', 420),
+	(15, 'Paulig President', 'Finland', '100/0', 750),
+	(16, 'Paulig Espresso Barista', 'Finland', '80/20', 1110);
+
+
+DROP TABLE IF EXISTS `actors`;
+
+CREATE TABLE `actors` (
+    `id` INTEGER PRIMARY KEY,
+    `name` VARCHAR(255),
+    `path` VARCHAR(255)
+) ENGINE=innodb;
+
+INSERT INTO `actors` VALUES
+	(1, 'Эдвард Нортон', 'frames/Edward Norton.jpg'),
+	(2, 'Джим Керри', 'frames/Jim Carrey.png'),
+	(3, 'Джим Парсонс', 'frames/Jim Parsons.jpg');
+	
+
+DROP TABLE IF EXISTS `albums`;
+
+CREATE TABLE `albums` (
+    `id` INTEGER PRIMARY KEY,
+    `title` VARCHAR(255),
+    `year` INTEGER,
+	`country` VARCHAR(50),
+    `length` VARCHAR(5)
+) ENGINE=innodb;
+
+INSERT INTO `albums` VALUES
+	(1, 'London Grammar - If You Wait', 2013, 'UK', '60:13'),
+	(2, 'Damon Albarn - Everyday Robots', 2014, 'UK', '71:51'),
+	(3, 'Pink Floyd - The Dark Side Of The Moon', 1975, 'UK', '42:59'),
+	(4, 'Kasabian - 48:13', 2014, 'UK', '48:13'),
+	(5, 'White Lies - Big TV', 2013, 'UK', '45:09'),
+	(6, 'The Doors - The Doors', 1967, 'USA', '44:48'), 
+	(7, 'alt-J - This Is All Yours', 2014, 'UK', '53:04'),
+	(8, 'Death Cab For Cutie - Plans', 2005, 'USA', '46:44'),
+	(9, 'Coldplay - Ghost Stories', 2014, 'UK', '35:08'),
+	(10, 'Kings Of Convenience - Quiet Is The New Loud', 2001, 'Norway', '44:40'),
+	(11, 'The Smiths - The Queen Is Dead', 1986, 'UK', '37:07'),
+	(12, 'Glass Animals - ZABA', 2014, 'UK', '45:40'),
+	(13, 'Keane - Hopes & Fears', 2004, 'UK', '45:12'),
+	(14, 'The Libertines - The Libertines', 2004, 'UK', '42:04'),
+	(15, 'MGMT - Oracular Spectacular', 2007, 'USA', '40:18'),
+	(16, 'The XX - XX', 2009, 'UK', '38:00'),
+	(17, 'God Is An Astronaut - All Is Violent, All Is Bright', 2006, 'Ireland', '48:17'),
+	(18, 'Suede - Dog Man Star', 1994, 'UK', '57:50'),
+	(19, 'Oasis - Definitely Maybe', 1994, 'UK', '56:14'),
+	(20, 'Muse - Origin Of Symmetry', 2001, 'UK', '51:41'),
+	(21, 'Radiohead - OK Computer', 1997, 'UK', '52:27'),
+	(22, 'Depeche Mode - Songs Of Faith And Devotion', 1993, 'UK', '47:26'),
+	(23, 'Black Rebel Motorcycle Club - Beat The Devil`s Tattoo', 2010, 'USA', '65:01'),
+	(24, 'The Cure - Disintegration', 1989, 'UK', '71:47'),
+	(25, 'Duran Duran - The Wedding Album', 1993, 'UK', '63:34');
