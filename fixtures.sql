@@ -149,3 +149,32 @@ INSERT INTO `reviews` VALUES
 	(3, 9.0, 'The Godfather: Part II', 1974, 'Francis Ford Coppola', 'The early life and career of Vito Corleone in 1920s New York is portrayed while his son, Michael, expands and tightens his grip on his crime syndicate stretching from Lake Tahoe, Nevada to pre-revolution 1958 Cuba.', 470330),
 	(4, 8.9, 'Pulp Fiction', 1994, 'Quentin Tarantino', 'The lives of two mob hit men, a boxer, a gangster''s wife, and a pair of diner bandits intertwine in four tales of violence and redemption.', 798792),
 	(5, 8.9, 'Il buono, il brutto, il cattivo.', 1966, 'Sergio Leone', 'A bounty hunting scam joins two men in an uneasy alliance against a third in a race to find a fortune in gold buried in a remote cemetery.', 310172);
+
+	
+DROP TABLE IF EXISTS `coffee`;
+
+CREATE TABLE `coffee` (
+    `id` INTEGER PRIMARY KEY,
+    `name` VARCHAR(255),
+    `manufacturer` VARCHAR(255),
+	`ratio` VARCHAR(10),
+	`price` INTEGER
+) ENGINE=innodb;
+
+INSERT INTO `coffee` VALUES
+	(1, 'Lavazza Gran Crema Espresso', 'Italy', '40/60', 860),
+	(2, 'Oquendo Cafeteria Mezcla', 'Spain', '80/20', 1110),
+	(3, 'Oquendo Hosteleria Natural', 'Spain', '70/30', 980),
+	(4, 'Liegeois Magnifico', 'Belgium', '80/20', 1250),
+	(5, 'Liegeois Espresso Venezia', 'Belgium', '90/10', 975),
+	(6, 'La Semeuse Mocca', 'Switzerland', '100/0', 1230),
+	(7, 'La Semeuse Don Marco', 'Switzerland', '80/20', 1190),
+	(8, 'Compagnia Dell Arabica', 'India', '100/0', 1110),
+	(9, 'Santo Domingo Aroma', 'Dominicana', '100/0', 1300),
+	(10, 'Santo Domingo Puro Cafe', 'Dominicana', '100/0', 1100),
+	(11, 'Alta Roma Platino', 'Russia', '90/10', 740),
+	(12, 'Chornaya Karta', 'Russia', '100/0', 350),
+	(13, 'Aroti Espresso', 'Russia', '80/20', 550),
+	(14, 'Aroti Super Crema', 'Russia', '40/60', 420),
+	(15, 'Paulig President', 'Finland', '100/0', 750),
+	(16, 'Paulig Espresso Barista', 'Finland', '80/20', 1110);

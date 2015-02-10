@@ -44,6 +44,7 @@
 								<li><a href="../1/">Задание №1</a></li>
 								<li class="active"><a href=".">Задание №2</a></li>
 								<li><a href="../3/">Задание №3</a></li>
+								<li><a href="../4/">Задание №4</a></li>
 							</ul>
 						</li>
 						<li><a href="https://github.com/toogle/sql-lab" target="_blank">Исходный код</a></li>
