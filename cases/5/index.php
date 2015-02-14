@@ -1,8 +1,5 @@
 <?php
 $conn = @mysqli_connect('localhost', 'sql-lab', 'sql-lab', 'sql-lab');
-mysqli_query($conn, "SET NAMES utf8");
-mysqli_query($conn, "SET CHARACTER SET utf8");
-mysqli_set_charset($conn, 'utf8');
 
 if (isset($_COOKIE['__img'])) {
 	$img = htmlspecialchars($_COOKIE['__img']);

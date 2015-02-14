@@ -69,9 +69,6 @@
 							// NOTE: The following code intended for demonstration purposes only.
 							//       It is EXTREMELY DANGER to use it for real applications.
 							$conn = @mysqli_connect('localhost', 'sql-lab', 'sql-lab', 'sql-lab');
-							mysqli_query($conn, "SET NAMES utf8");
-							mysqli_query($conn, "SET CHARACTER SET utf8");
-							mysqli_set_charset($conn, 'utf8');
 
 							$month = isset($_GET['month']) ? $_GET['month'] : date('n');
 							$limit = isset($_GET['limit']) ? $_GET['limit'] : 20;
