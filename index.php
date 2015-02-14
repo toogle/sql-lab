@@ -1,3 +1,4 @@
+<?php require_once('config.php'); ?>
 <!DOCTYPE html>
 <html lang="ru">
 	<head>
@@ -7,7 +8,7 @@
 		<meta name="description" content="SQL Injection Lab">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="<?php echo MEDIA_URL; ?>/css/bootstrap.min.css" rel="stylesheet">
 
 		<style>
 			.nav-inner {
@@ -16,7 +17,7 @@
 		</style>
 
 		<!--[if lt IE 9]>
-			<script src="js/lib/respond.min.js"></script>
+			<script src="<?php echo MEDIA_URL; ?>/js/lib/respond.min.js"></script>
 		<![endif]-->
 	</head>
 	<body>
@@ -33,7 +34,7 @@
 				<div class="col-md-3">
 					<ul class="nav nav-pills nav-stacked">
 						<li class="active"><a href="#">Главная</a></li>
-						<li><a href="documentation.html">Методическое пособие</a></li>
+						<li><a href="documentation.php">Методическое пособие</a></li>
 						<li>
 							<a class="accordion-toggle" href="#cases" data-toggle="collapse">Рабочее задание</a>
 							<ul id="cases" class="nav nav-pills nav-stacked nav-inner collapse">
@@ -67,7 +68,7 @@
 			</div>
 		</div>
 
-		<script src="js/lib/jquery-1.11.1.min.js"></script>
-		<script src="js/lib/bootstrap.min.js"></script>
+		<script src="<?php echo MEDIA_URL; ?>/js/lib/jquery-1.11.1.min.js"></script>
+		<script src="<?php echo MEDIA_URL; ?>/js/lib/bootstrap.min.js"></script>
 	</body>
 </html>

@@ -1,3 +1,4 @@
+<?php require_once('config.php'); ?>
 <!DOCTYPE html>
 <html lang="ru">
 	<head>
@@ -7,7 +8,7 @@
 		<meta name="description" content="SQL Injection Lab">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="<?php echo MEDIA_URL; ?>/css/bootstrap.min.css" rel="stylesheet">
 
 		<style>
 			h4 {
@@ -34,7 +35,7 @@
 		</style>
 
 		<!--[if lt IE 9]>
-			<script src="js/lib/respond.min.js"></script>
+			<script src="<?php echo MEDIA_URL; ?>/js/lib/respond.min.js"></script>
 		<![endif]-->
 	</head>
 	<body>
@@ -301,8 +302,8 @@
 			</div>
 		</div>
 
-		<script src="js/lib/jquery-1.11.1.min.js"></script>
-		<script src="js/lib/bootstrap.min.js"></script>
+		<script src="<?php echo MEDIA_URL; ?>/js/lib/jquery-1.11.1.min.js"></script>
+		<script src="<?php echo MEDIA_URL; ?>/js/lib/bootstrap.min.js"></script>
 		<script>
 			$(function() {
 				$('#demo1-slot').html($('#demo1-field').val());

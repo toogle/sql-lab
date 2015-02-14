@@ -1,3 +1,4 @@
+<?php require_once('../../config.php'); ?>
 <!DOCTYPE html>
 <html lang="ru">
 	<head>
@@ -7,7 +8,7 @@
 		<meta name="description" content="SQL Injection Lab">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<link href="../../css/bootstrap.min.css" rel="stylesheet">
+		<link href="<?php echo MEDIA_URL; ?>/css/bootstrap.min.css" rel="stylesheet">
 
 		<style>
 			h4 {
@@ -20,7 +21,7 @@
 		</style>
 
 		<!--[if lt IE 9]>
-			<script src="../../js/lib/respond.min.js"></script>
+			<script src="<?php echo MEDIA_URL; ?>/js/lib/respond.min.js"></script>
 		<![endif]-->
 	</head>
 	<body>
@@ -37,7 +38,7 @@
 				<div class="col-md-3">
 					<ul class="nav nav-pills nav-stacked">
 						<li><a href="../../">Главная</a></li>
-						<li><a href="../../documentation.html">Методическое пособие</a></li>
+						<li><a href="../../documentation.php">Методическое пособие</a></li>
 						<li>
 							<a href="#">Рабочее задание</a>
 							<ul class="nav nav-pills nav-stacked nav-inner">
@@ -59,7 +60,7 @@
 						if (isset($_POST['login']) && isset($_POST['password'])) {
 							// NOTE: The following code intended for demonstration purposes only.
 							//       It is EXTREMELY DANGER to use it for real applications.
-							$conn = @mysqli_connect('localhost', 'sql-lab', 'sql-lab', 'sql-lab');
+							$conn = @mysqli_connect(MYSQL_HOST, MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_DATABASE);
 
 							$sql  = "SELECT login, password";
 							$sql .= "  FROM users";
@@ -133,8 +134,8 @@
 			</div>
 		</div>
 
-		<script src="../../js/lib/jquery-1.11.1.min.js"></script>
-		<script src="../../js/lib/bootstrap.min.js"></script>
+		<script src="<?php echo MEDIA_URL; ?>/js/lib/jquery-1.11.1.min.js"></script>
+		<script src="<?php echo MEDIA_URL; ?>/js/lib/bootstrap.min.js"></script>
 		<script>
 			$('#hint').on('show.bs.collapse', function() {
 				$('a[data-target="#hint"]').html('скрыть');
